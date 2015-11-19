@@ -1,12 +1,22 @@
-# `btrconf`
-Better (read: simpler) node.js config loader.
+# `btrconf` [![Build Status](https://travis-ci.org/willfrew/node-btrconf.svg)](https://travis-ci.org/willfrew/node-btrconf)
+_Better (read: simpler) node.js config loader._
 
-Writing JSON / YAML config files can be annoying and inflexible.
-For many projects, simple Javascript config files are sufficient.
-For this reason, `btrconf` assists you in loading environment-aware, Javascript
-config files in a straightforward way.
+While there are other node.js config loaders out there, they force you to split
+your config into separate files. A default config file and then another per
+environment.
+For a small application (or microservice) it's often overkill to have your
+config spread across 3-5 different files.
+
+`btrconf` is of the opinion that, for small projects, one config file is
+not just sufficient, but better.
+If you find your config file getting too large, split it into multiple files
+by configuration type (eg. database config, external service auth, etc.).
 
 ## Usage
+
+`btrconf` uses the `NODE_ENV` environment variable to determine which config
+it should load (_default_: `'development'`).
+
 Given a config file `./config.js`:
 ```javascript
 var env = process.env;
@@ -61,12 +71,13 @@ your `node_modules/`, we use `module.parent.filename` to determine the name of
 the file you are requiring `btrconf` from.
 We then load the specified config file relative to your that file.
 
-This means that if you `require('btrconf')` from multiple files (unlikely but
-possible), `module.parent.filename` will be incorrect in all but one.
+This means that if you `require('btrconf')` from multiple files,
+`module.parent.filename` will refer to the first file to require `btrconf`.
 In this case, you can pass an absolute filename using:
 ```javascript
 var config = btrconf.load(require.resolve('./config'));
 ```
 
-Due to the above, `btrconf` is not suitable for use in other npm modules, sorry!
+Due to the above, `btrconf` is currently not suitable for use in other npm
+modules, sorry!
 
