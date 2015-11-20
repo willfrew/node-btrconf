@@ -102,4 +102,9 @@ describe('btrconf.load()', function() {
     expect(btrconf.load(filename)).to.deep.equal(btrconf.load(require(filename)));
   });
 
+  it('should require absolute filenames', function() {
+    var absFilename = require.resolve('./fixtures/simpleConf');
+    expect(btrconf.load(absFilename)).to.deep.equal(btrconf.load(require(absFilename)));
+  });
+
 });
