@@ -62,6 +62,34 @@ var server = express();
 server.listen(config.port);
 ```
 
+## Typescript
+This module comes with it's own (tiny) type definitions. The only real
+difference when you're using Typescript is that you'll need an `interface`
+that describes the structure of your config file.
+
+To load the config file in the example above, your Typescript would look
+something like:
+```typescript
+import * as btrconf from 'btrconf';
+
+interface AppConfig {
+  port: number;
+  errors: boolean;
+  db: {
+    client: string;
+    connection: string;
+  };
+}
+
+let config = btrconf.load<AppConfig>('./config');
+/* ... */
+```
+
+At the moment, there is **no guarantee** that the object is read from your
+config file matches your interface. If this is something you're interested in,
+raise an issue as I have a solution for this; I just haven't had time to
+implement it.
+
 ## Caveats
 Hey, we said it was better, not perfect ;)
 
