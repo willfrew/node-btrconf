@@ -1,6 +1,6 @@
 {
   "name": "btrconf",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Better (& simpler) node.js config loader.",
   "main": "index.js",
   "scripts": {
